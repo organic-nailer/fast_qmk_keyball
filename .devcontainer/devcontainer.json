@@ -1,0 +1,34 @@
+{
+  "name": "Keyball (QMK) Dev",
+
+  // どのdocker-composeファイルを、どのサービスで使うかを指定
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app",
+
+  // コンテナに入った際の作業ディレクトリを指定
+  "workspaceFolder": "/workspace",
+
+  // コンテナが初回作成された後に一度だけ実行されるコマンド
+  // これでQMKの初期セットアップが自動で完了する
+  "postCreateCommand": "qmk setup -y",
+
+  // VSCode自体の設定や拡張機能をカスタマイズ
+  "customizations": {
+    "vscode": {
+      // コンテナ内のターミナルの設定など
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      // コンテナ内で有効化するVSCode拡張機能
+      // C/C++の補完やMakefileのツール、GitLensは入れておいて損はない
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.makefile-tools"
+      ]
+    }
+  },
+
+  // コンテナ内での操作は、Dockerfileで作成した 'vscode' ユーザーで行う
+  "remoteUser": "vscode"
+}

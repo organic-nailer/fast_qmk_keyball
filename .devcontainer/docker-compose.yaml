@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    # Dockerfileが存在するこのディレクトリのコンテキストでビルドする
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      # プロジェクトルート（..で親ディレクトリを指定）をコンテナ内の/workspaceにマウント
+      - ..:/workspace:cached
+      
+      # qmk setupで生成される設定ファイル群を永続化するためのボリューム
+      # これがないと、コンテナを作り直すたびにqmk setupが必要になる
+      - qmk-settings:/qmk_home
+
+    # このコマンドでコンテナを起動させ続ける
+    command: sleep infinity
+
+# 上記で指定した名前付きボリュームを定義
+volumes:
+  qmk-settings:
